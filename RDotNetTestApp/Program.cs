@@ -14,22 +14,14 @@ namespace RDotNetTestApp
             REngine.SetEnvironmentVariables();
             using (var engine = REngine.GetInstance())
             {
-                var result = engine.Evaluate("a = 10");
-                PrintResult(result);
-                result = engine.Evaluate("a");
-                PrintResult(result);
+                engine.Evaluate("x <- 1");
+                engine.Evaluate("testinglongname <- 2");
+                var result = engine.Evaluate("ls()").AsCharacter().ToList();
+                foreach (var item in result)
+                {
+                    Console.WriteLine(item);
+                }
             }
-        }
-
-        static void PrintResult(SymbolicExpression result)
-        {
-            var numericResult = result.AsNumeric();
-            Console.WriteLine("Size of numeric vector: {0}", numericResult.Length);
-            Console.WriteLine("First vector result as numeric: {0}", numericResult.FirstOrDefault());
-            var characterResult = result.AsCharacter();
-            Console.WriteLine("Size of result as character vector: {0}", characterResult.Length);
-            Console.WriteLine("First vector result as character: {0}", characterResult.FirstOrDefault());
-            Console.WriteLine("");
         }
     }
 }
